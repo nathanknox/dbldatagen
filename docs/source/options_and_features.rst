@@ -87,7 +87,7 @@ The following code sample illustrates generating a streaming data frame:
    checkpoint_dir = os.path.join(base_dir, "checkpoint")
 
    # build our data spec
-   dataSpec = (dg.DataGenerator(sparkSession=spark, name="test_data_set1", rows=self.row_count,
+   dataSpec = (dg.DataGenerator(sparkSession=spark, name="test_data_set1", rows=row_count,
                                     partitions=4, randomSeedMethod='hash_fieldname')
                    .withIdOutput()
                    .withColumn("code1", IntegerType(), minValue=100, maxValue=200)
@@ -100,7 +100,7 @@ The following code sample illustrates generating a streaming data frame:
 
    # generate the data using a streaming data frame
    dfData = dataSpec.build(withStreaming=True,
-                                   options={'rowsPerSecond': self.rows_per_second})
+                                   options={'rowsPerSecond': rows_per_second})
 
    (dfData
     .writeStream
@@ -111,7 +111,7 @@ The following code sample illustrates generating a streaming data frame:
     .start())
 
    start_time = time.time()
-   time.sleep(self.time_to_run)
+   time.sleep(time_to_run)
 
    # note stopping the stream may produce exceptions - these can be ignored   recent_progress = []
    for x in spark.streams.active:
